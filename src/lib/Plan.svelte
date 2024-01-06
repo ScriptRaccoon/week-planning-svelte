@@ -17,17 +17,22 @@
 
 	export let plan: PlanData
 
+	$: show_edit_container = $editing_id === plan.id
+
+	let name = plan.name
+
 	type Events = {
 		next: string
 		previous: string
 		delete: string
 		toggle_done: string
+		rename: [string, string]
 	}
 
 	const dispatch = createEventDispatcher<Events>()
 
 	function toggle_edit() {
-		$editing_id = $editing_id === plan.id ? null : plan.id
+		$editing_id = show_edit_container ? null : plan.id
 	}
 
 	function cancel_edit() {
@@ -53,21 +58,26 @@
 		cancel_edit()
 		dispatch("delete", plan.id)
 	}
+
+	function rename_plan() {
+		dispatch("rename", [plan.id, name])
+	}
 </script>
 
 <div class="container">
 	<div
 		class="plan"
 		class:done={plan.done}
-		class:edit={$editing_id === plan.id}
+		class:edit={show_edit_container}
 		class:opaque={$editing_id !== null && $editing_id !== plan.id}
 	>
-		{#if $editing_id === plan.id}
-			<div
+		{#if show_edit_container}
+			<input
+				type="text"
 				class="name"
-				contenteditable="true"
-				bind:textContent={plan.name}
-			></div>
+				bind:value={name}
+				on:blur={rename_plan}
+			/>
 		{:else}
 			<div class="name">
 				{plan.name}
@@ -79,7 +89,7 @@
 		</button>
 	</div>
 
-	{#if $editing_id === plan.id}
+	{#if show_edit_container}
 		<div class="edit_container" transition:fly={{ duration: 120, x: 20 }}>
 			<button
 				aria-label="delete plan"
@@ -144,6 +154,7 @@
 		flex: 1;
 		font-size: 1.25rem;
 		transition: opacity 120ms linear;
+		line-height: inherit;
 	}
 
 	.button.checker.done {

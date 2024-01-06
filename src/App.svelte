@@ -59,6 +59,13 @@
 		plan.done = !plan.done
 		$plans[week_start.toISOString()] = current_plans
 	}
+
+	function rename_plan(id: string, name: string): void {
+		const plan = current_plans.find((p) => p.id === id)
+		if (!plan) return
+		plan.name = name
+		$plans[week_start.toISOString()] = current_plans
+	}
 </script>
 
 <Header />
@@ -72,6 +79,7 @@
 		on:next={(e) => move(e.detail, +1)}
 		on:delete={(e) => delete_plan(e.detail)}
 		on:toggle_done={(e) => toggle_done(e.detail)}
+		on:rename={(e) => rename_plan(...e.detail)}
 	/>
 </main>
 
