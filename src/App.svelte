@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PlanData } from "./types"
 	import { add_one_week, get_week_start, remove_one_week } from "./utils"
-	import { plans } from "./stores"
+	import { editing_id, plans } from "./stores"
 
 	import WeekMenu from "./lib/WeekMenu.svelte"
 	import Header from "./lib/Header.svelte"
@@ -66,7 +66,15 @@
 		plan.name = name
 		$plans[week_start.toISOString()] = current_plans
 	}
+
+	function handle_keydown(e: KeyboardEvent) {
+		if (e.key === "Escape") {
+			$editing_id = null
+		}
+	}
 </script>
+
+<svelte:window on:keydown={handle_keydown} />
 
 <Header />
 

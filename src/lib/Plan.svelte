@@ -69,7 +69,7 @@
 		class="plan"
 		class:done={plan.done}
 		class:edit={show_edit_container}
-		class:opaque={$editing_id !== null && $editing_id !== plan.id}
+		class:opaque={$editing_id !== null && !show_edit_container}
 	>
 		{#if show_edit_container}
 			<input
@@ -92,23 +92,15 @@
 	{#if show_edit_container}
 		<div class="edit_container" transition:fly={{ duration: 120, x: 20 }}>
 			<button
-				aria-label="delete plan"
-				class="button small"
-				on:click={delete_plan}
+				class="button small checker"
+				class:done={plan.done}
+				on:click={toggle_done}
 			>
-				<Fa icon={faTrashAlt} />
+				<Fa icon={plan.done ? faCheckCircle : faCheck} />
 			</button>
 
 			<button
-				aria-label="move tp previous week"
-				class="button small"
-				on:click={move_to_previous_week}
-			>
-				<Fa icon={faChevronLeft} />
-			</button>
-
-			<button
-				aria-label="move tp next week"
+				aria-label="move to next week"
 				class="button small"
 				on:click={move_to_next_week}
 			>
@@ -116,11 +108,19 @@
 			</button>
 
 			<button
-				class="button small checker"
-				class:done={plan.done}
-				on:click={toggle_done}
+				aria-label="move to previous week"
+				class="button small"
+				on:click={move_to_previous_week}
 			>
-				<Fa icon={plan.done ? faCheckCircle : faCheck} />
+				<Fa icon={faChevronLeft} />
+			</button>
+
+			<button
+				aria-label="delete plan"
+				class="button small"
+				on:click={delete_plan}
+			>
+				<Fa icon={faTrashAlt} />
 			</button>
 		</div>
 	{/if}
@@ -175,6 +175,7 @@
 		border-radius: 0.25rem;
 		box-shadow: 0rem 0rem 1rem #fff2;
 		display: flex;
+		flex-direction: row-reverse;
 		gap: 0.5rem;
 	}
 </style>
