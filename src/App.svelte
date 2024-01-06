@@ -72,5 +72,6 @@
 		max-width: 40rem;
 		margin: 0 auto;
 		padding-inline: 1rem;
+		overflow-x: hidden;
 	}
 </style>
