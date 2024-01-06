@@ -11,6 +11,7 @@
 		text-align: center;
 		font-weight: 500;
 		font-size: 2.5rem;
+		line-height: 1.1;
 	}
 
 	@media (min-width: 34rem) {
