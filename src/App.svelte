@@ -25,9 +25,10 @@
 		name = ""
 	}
 
-	function move(id: string, direction: number): void {
+	function move(direction: number): void {
+		const id = $editing_id
 		const plan = current_plans.find((p) => p.id === id)
-		if (!plan) return
+		if (!id || !plan) return
 
 		$plans[week_start.toISOString()] = current_plans.filter(
 			(p) => p.id != id
@@ -45,32 +46,40 @@
 			...$plans[week_start.toISOString()],
 			plan,
 		]
+		cancel_edit()
 	}
 
-	function delete_plan(id: string): void {
+	function delete_plan(): void {
 		$plans[week_start.toISOString()] = current_plans.filter(
-			(p) => p.id != id
+			(p) => p.id != $editing_id
 		)
+		cancel_edit()
 	}
 
-	function toggle_done(id: string): void {
-		const plan = current_plans.find((p) => p.id === id)
+	function toggle_done(): void {
+		const plan = current_plans.find((p) => p.id === $editing_id)
 		if (!plan) return
 		plan.done = !plan.done
 		$plans[week_start.toISOString()] = current_plans
+		cancel_edit()
 	}
 
-	function rename_plan(id: string, name: string): void {
-		const plan = current_plans.find((p) => p.id === id)
+	function rename_plan(name: string): void {
+		const plan = current_plans.find((p) => p.id === $editing_id)
 		if (!plan) return
 		plan.name = name
 		$plans[week_start.toISOString()] = current_plans
+		cancel_edit()
 	}
 
 	function handle_keydown(e: KeyboardEvent) {
 		if (e.key === "Escape") {
-			$editing_id = null
+			cancel_edit()
 		}
+	}
+
+	function cancel_edit() {
+		$editing_id = null
 	}
 </script>
 
@@ -83,11 +92,11 @@
 	<AddPlan on:add={(e) => create_plan(e.detail)} />
 	<Plans
 		{current_plans}
-		on:previous={(e) => move(e.detail, -1)}
-		on:next={(e) => move(e.detail, +1)}
-		on:delete={(e) => delete_plan(e.detail)}
-		on:toggle_done={(e) => toggle_done(e.detail)}
-		on:rename={(e) => rename_plan(...e.detail)}
+		on:previous={() => move(-1)}
+		on:next={() => move(+1)}
+		on:delete={() => delete_plan()}
+		on:toggle_done={() => toggle_done()}
+		on:rename={(e) => rename_plan(e.detail)}
 	/>
 </main>
 

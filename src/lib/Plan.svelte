@@ -22,11 +22,11 @@
 	let name = plan.name
 
 	type Events = {
-		next: string
-		previous: string
-		delete: string
-		toggle_done: string
-		rename: [string, string]
+		next: void
+		previous: void
+		delete: void
+		toggle_done: void
+		rename: string
 	}
 
 	const dispatch = createEventDispatcher<Events>()
@@ -35,32 +35,24 @@
 		$editing_id = show_edit_container ? null : plan.id
 	}
 
-	function cancel_edit() {
-		$editing_id = null
-	}
-
 	function toggle_done() {
-		cancel_edit()
-		dispatch("toggle_done", plan.id)
+		dispatch("toggle_done")
 	}
 
 	function move_to_next_week() {
-		cancel_edit()
-		dispatch("next", plan.id)
+		dispatch("next")
 	}
 
 	function move_to_previous_week() {
-		cancel_edit()
-		dispatch("previous", plan.id)
+		dispatch("previous")
 	}
 
 	function delete_plan() {
-		cancel_edit()
-		dispatch("delete", plan.id)
+		dispatch("delete")
 	}
 
 	function rename_plan() {
-		dispatch("rename", [plan.id, name])
+		dispatch("rename", name)
 	}
 </script>
 
