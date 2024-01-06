@@ -52,6 +52,13 @@
 			(p) => p.id != id
 		)
 	}
+
+	function toggle_done(id: string): void {
+		const plan = current_plans.find((p) => p.id === id)
+		if (!plan) return
+		plan.done = !plan.done
+		$plans[week_start.toISOString()] = current_plans
+	}
 </script>
 
 <Header />
@@ -64,6 +71,7 @@
 		on:previous={(e) => move(e.detail, -1)}
 		on:next={(e) => move(e.detail, +1)}
 		on:delete={(e) => delete_plan(e.detail)}
+		on:toggle_done={(e) => toggle_done(e.detail)}
 	/>
 </main>
 

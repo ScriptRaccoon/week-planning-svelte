@@ -17,31 +17,40 @@
 
 	export let plan: PlanData
 
-	type Events = { next: string; previous: string; delete: string }
+	type Events = {
+		next: string
+		previous: string
+		delete: string
+		toggle_done: string
+	}
 
 	const dispatch = createEventDispatcher<Events>()
-
-	function toggle_done() {
-		plan.done = !plan.done
-		$editing_id = null
-	}
 
 	function toggle_edit() {
 		$editing_id = $editing_id === plan.id ? null : plan.id
 	}
 
-	function move_to_next_week() {
+	function cancel_edit() {
 		$editing_id = null
+	}
+
+	function toggle_done() {
+		cancel_edit()
+		dispatch("toggle_done", plan.id)
+	}
+
+	function move_to_next_week() {
+		cancel_edit()
 		dispatch("next", plan.id)
 	}
 
 	function move_to_previous_week() {
-		$editing_id = null
+		cancel_edit()
 		dispatch("previous", plan.id)
 	}
 
 	function delete_plan() {
-		$editing_id = null
+		cancel_edit()
 		dispatch("delete", plan.id)
 	}
 </script>
