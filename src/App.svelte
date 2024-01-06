@@ -31,10 +31,10 @@
 		$plans[key(week_start)] = current_plans.filter((p) => p.id != id)
 
 		const action = offset === 1 ? add_one_week : remove_one_week
-		week_start = action(week_start)
+		const new_date = action(week_start)
 
-		$plans[key(week_start)] ??= []
-		$plans[key(week_start)] = [...$plans[key(week_start)], plan]
+		$plans[key(new_date)] ??= []
+		$plans[key(new_date)] = [...$plans[key(new_date)], plan]
 		cancel_edit()
 	}
 
