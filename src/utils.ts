@@ -1,13 +1,11 @@
 export function get_week_start(date: Date) {
 	const week_start = new Date(date)
-	week_start.setHours(0, 0, 0, 0)
 	week_start.setDate(date.getDate() - day_index(date))
 	return week_start
 }
 
 export function get_week_end(date: Date) {
 	const week_end = new Date(date)
-	week_end.setHours(0, 0, 0, 0)
 	week_end.setDate(date.getDate() + (6 - day_index(date)))
 	return week_end
 }
