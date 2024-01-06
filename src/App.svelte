@@ -63,7 +63,6 @@
 		if (!plan) return
 		plan.name = name
 		$plans[key(week_start)] = current_plans
-		cancel_edit()
 	}
 
 	function handle_keydown(e: KeyboardEvent) {
