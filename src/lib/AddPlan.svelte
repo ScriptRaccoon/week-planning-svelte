@@ -21,7 +21,7 @@
 		bind:value={name}
 		autocomplete="off"
 	/>
-	<button class="button">Add</button>
+	<button class="button big">Add</button>
 </form>
 
 <style>

@@ -4,13 +4,13 @@
 
 	import Fa from "svelte-fa"
 	import {
+		faBars,
 		faCheck,
-		faCheckCircle,
 		faChevronLeft,
 		faChevronRight,
-		faCog,
 		faTrashAlt,
 	} from "@fortawesome/free-solid-svg-icons"
+	import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
 	import type { PlanData } from "../types"
 	import { editing_id } from "../stores"
@@ -52,6 +52,10 @@
 	}
 
 	function rename_plan() {
+		if (!name) {
+			name = plan.name
+			return
+		}
 		dispatch("rename", name)
 	}
 </script>
@@ -76,24 +80,25 @@
 			</div>
 		{/if}
 
-		<button class="button small" on:click={toggle_edit}>
-			<Fa icon={faCog} />
+		<button class="button" on:click={toggle_edit}>
+			<Fa icon={faBars} />
 		</button>
 	</div>
 
 	{#if show_edit_container}
 		<div class="edit_container" transition:fly={{ duration: 120, x: 20 }}>
 			<button
-				class="button small checker"
+				aria-label="toggle done"
+				class="button"
 				class:done={plan.done}
 				on:click={toggle_done}
 			>
-				<Fa icon={plan.done ? faCheckCircle : faCheck} />
+				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
 
 			<button
 				aria-label="move to next week"
-				class="button small"
+				class="button"
 				on:click={move_to_next_week}
 			>
 				<Fa icon={faChevronRight} />
@@ -101,7 +106,7 @@
 
 			<button
 				aria-label="move to previous week"
-				class="button small"
+				class="button"
 				on:click={move_to_previous_week}
 			>
 				<Fa icon={faChevronLeft} />
@@ -109,7 +114,7 @@
 
 			<button
 				aria-label="delete plan"
-				class="button small"
+				class="button"
 				on:click={delete_plan}
 			>
 				<Fa icon={faTrashAlt} />
@@ -125,9 +130,9 @@
 
 	.plan {
 		display: flex;
-		align-items: start;
+		align-items: center;
 		gap: 0.5rem;
-		padding: 0.5rem 0.75rem;
+		padding-right: 0.75rem;
 		border-radius: 0.25rem;
 		background-color: var(--card-color);
 		transition: opacity 120ms linear;
@@ -145,16 +150,22 @@
 	.name {
 		flex: 1;
 		font-size: 1.25rem;
-		transition: opacity 120ms linear;
 		line-height: inherit;
+		border-radius: 0.1rem;
+		padding-block: 0.5rem;
+		padding-left: 0.75rem;
 	}
 
-	.button.checker.done {
-		background-color: var(--secondary-color);
+	.plan > * {
+		transition: opacity 120ms linear;
 	}
 
-	.plan.done:not(.edit) .name {
+	.plan.done:not(.edit) > *:not(:focus) {
 		opacity: 0.15;
+	}
+
+	.button.done {
+		background-color: var(--secondary-color);
 	}
 
 	.edit_container {

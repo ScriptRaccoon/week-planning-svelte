@@ -27,11 +27,11 @@
 		{week_start.toLocaleDateString()} &nbsp;&ndash;&nbsp; {week_end.toLocaleDateString()}
 	</h2>
 
-	<button class="button" on:click={decrement_week}>
+	<button class="button big" on:click={decrement_week}>
 		<Fa icon={faChevronLeft} />
 	</button>
 
-	<button class="button" on:click={increment_week}>
+	<button class="button big" on:click={increment_week}>
 		<Fa icon={faChevronRight} />
 	</button>
 </div>
