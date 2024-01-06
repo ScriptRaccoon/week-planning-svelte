@@ -81,8 +81,8 @@
 		{current_plans}
 		on:next={() => move(1)}
 		on:previous={() => move(-1)}
-		on:delete={() => delete_plan()}
-		on:toggle_done={() => toggle_done()}
+		on:delete={delete_plan}
+		on:toggle_done={toggle_done}
 		on:rename={(e) => rename_plan(e.detail)}
 	/>
 </main>
