@@ -4,13 +4,22 @@
 	const dispatch = createEventDispatcher<{ add: string }>()
 
 	let name: string = ""
+	let status: string = ""
 
 	function add() {
 		if (!name) return
 		dispatch("add", name)
 		name = ""
+		set_status("added")
+	}
+
+	function set_status(txt: string) {
+		status = txt
+		setTimeout(() => (status = ""), 1000)
 	}
 </script>
+
+<div aria-live="polite" class="sr-only">{status}</div>
 
 <form on:submit|preventDefault={add}>
 	<label class="label" for="name_input">What do you plan this week?</label>

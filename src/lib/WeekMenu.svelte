@@ -23,15 +23,25 @@
 </script>
 
 <div>
-	<h2 aria-live="polite">
-		{week_start.toLocaleDateString()} &nbsp;&ndash;&nbsp; {week_end.toLocaleDateString()}
+	<h2>
+		<span aria-hidden="true">
+			{week_start.toLocaleDateString()} &nbsp;&ndash;&nbsp; {week_end.toLocaleDateString()}
+		</span>
+		<span class="sr-only" aria-live="polite">
+			{week_start.toDateString()}
+			{week_end.toDateString()}
+		</span>
 	</h2>
 
-	<button class="button big" on:click={decrement_week}>
+	<button
+		class="button big"
+		aria-label="previous week"
+		on:click={decrement_week}
+	>
 		<Fa icon={faChevronLeft} />
 	</button>
 
-	<button class="button big" on:click={increment_week}>
+	<button class="button big" aria-label="next week" on:click={increment_week}>
 		<Fa icon={faChevronRight} />
 	</button>
 </div>

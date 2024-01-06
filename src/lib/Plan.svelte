@@ -67,22 +67,30 @@
 		class:edit={show_edit_container}
 		class:opaque={$editing_id !== null && !show_edit_container}
 	>
+		<button
+			aria-label="toggle edit"
+			class="button"
+			on:click={toggle_edit}
+			aria-describedby={plan.id}
+		>
+			<Fa icon={faBars} />
+		</button>
+
 		{#if show_edit_container}
+			<!-- svelte-ignore a11y-autofocus -->
 			<input
+				aria-label="name"
 				type="text"
 				class="name"
 				bind:value={name}
 				on:blur={rename_plan}
+				autofocus
 			/>
 		{:else}
-			<div class="name">
+			<div class="name" id={plan.id}>
 				{plan.name}
 			</div>
 		{/if}
-
-		<button class="button" on:click={toggle_edit}>
-			<Fa icon={faBars} />
-		</button>
 	</div>
 
 	{#if show_edit_container}
@@ -130,6 +138,7 @@
 
 	.plan {
 		display: flex;
+		flex-direction: row-reverse;
 		align-items: center;
 		gap: 0.5rem;
 		padding-right: 0.75rem;
