@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PlanData } from "./types"
-	import { add_one_week, get_week_start, remove_one_week } from "./utils"
+	import { add_one_week, get_week_start, key, remove_one_week } from "./utils"
 	import { editing_id, plans } from "./stores"
 
 	import WeekMenu from "./lib/WeekMenu.svelte"
@@ -12,7 +12,7 @@
 
 	let week_start = get_week_start(now)
 
-	$: current_plans = $plans[week_start.toISOString()] ?? []
+	$: current_plans = $plans[key(week_start)] ?? []
 
 	function create_plan(name: string) {
 		if (!name) return
@@ -21,7 +21,7 @@
 			name,
 			done: false,
 		}
-		$plans[week_start.toISOString()] = [...current_plans, plan]
+		$plans[key(week_start)] = [...current_plans, plan]
 		name = ""
 	}
 
@@ -30,27 +30,21 @@
 		const plan = current_plans.find((p) => p.id === id)
 		if (!id || !plan) return
 
-		$plans[week_start.toISOString()] = current_plans.filter(
-			(p) => p.id != id
-		)
+		$plans[key(week_start)] = current_plans.filter((p) => p.id != id)
 
 		week_start =
 			direction === -1
 				? remove_one_week(week_start)
 				: add_one_week(week_start)
 
-		if (!$plans[week_start.toISOString()])
-			$plans[week_start.toISOString()] = []
+		if (!$plans[key(week_start)]) $plans[key(week_start)] = []
 
-		$plans[week_start.toISOString()] = [
-			...$plans[week_start.toISOString()],
-			plan,
-		]
+		$plans[key(week_start)] = [...$plans[key(week_start)], plan]
 		cancel_edit()
 	}
 
 	function delete_plan(): void {
-		$plans[week_start.toISOString()] = current_plans.filter(
+		$plans[key(week_start)] = current_plans.filter(
 			(p) => p.id != $editing_id
 		)
 		cancel_edit()
@@ -60,7 +54,7 @@
 		const plan = current_plans.find((p) => p.id === $editing_id)
 		if (!plan) return
 		plan.done = !plan.done
-		$plans[week_start.toISOString()] = current_plans
+		$plans[key(week_start)] = current_plans
 		cancel_edit()
 	}
 
@@ -68,7 +62,7 @@
 		const plan = current_plans.find((p) => p.id === $editing_id)
 		if (!plan) return
 		plan.name = name
-		$plans[week_start.toISOString()] = current_plans
+		$plans[key(week_start)] = current_plans
 		cancel_edit()
 	}
 

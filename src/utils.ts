@@ -27,3 +27,7 @@ export function remove_one_week(date: Date) {
 function day_index(date: Date) {
 	return (date.getDay() + 6) % 7
 }
+
+export function key(date: Date): string {
+	return date.toISOString().slice(0, 10)
+}
