@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PlanData } from "./types"
 	import { add_one_week, get_week_start, remove_one_week } from "./utils"
+	import { plans } from "./stores"
 
 	import WeekMenu from "./lib/WeekMenu.svelte"
 	import Header from "./lib/Header.svelte"
@@ -11,9 +12,7 @@
 
 	let week_start = get_week_start(now)
 
-	let plans: Record<string, PlanData[]> = {}
-
-	$: current_plans = plans[week_start.toISOString()] ?? []
+	$: current_plans = $plans[week_start.toISOString()] ?? []
 
 	function create_plan(name: string) {
 		if (!name) return
@@ -22,7 +21,7 @@
 			name,
 			done: false,
 		}
-		plans[week_start.toISOString()] = [...current_plans, plan]
+		$plans[week_start.toISOString()] = [...current_plans, plan]
 		name = ""
 	}
 
@@ -30,7 +29,7 @@
 		const plan = current_plans.find((p) => p.id === id)
 		if (!plan) return
 
-		plans[week_start.toISOString()] = current_plans.filter(
+		$plans[week_start.toISOString()] = current_plans.filter(
 			(p) => p.id != id
 		)
 
@@ -39,17 +38,17 @@
 				? remove_one_week(week_start)
 				: add_one_week(week_start)
 
-		if (!plans[week_start.toISOString()])
-			plans[week_start.toISOString()] = []
+		if (!$plans[week_start.toISOString()])
+			$plans[week_start.toISOString()] = []
 
-		plans[week_start.toISOString()] = [
-			...plans[week_start.toISOString()],
+		$plans[week_start.toISOString()] = [
+			...$plans[week_start.toISOString()],
 			plan,
 		]
 	}
 
 	function delete_plan(id: string): void {
-		plans[week_start.toISOString()] = current_plans.filter(
+		$plans[week_start.toISOString()] = current_plans.filter(
 			(p) => p.id != id
 		)
 	}
