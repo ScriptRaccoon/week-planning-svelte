@@ -158,6 +158,7 @@
 
 	.name {
 		flex: 1;
+		width: 0; /* fix for layout issue in safari */
 		font-size: 1.25rem;
 		line-height: inherit;
 		border-radius: 0.1rem;
