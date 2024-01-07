@@ -77,14 +77,12 @@
 		</button>
 
 		{#if show_edit_container}
-			<!-- svelte-ignore a11y-autofocus -->
 			<input
 				aria-label="name"
 				type="text"
 				class="name"
 				bind:value={name}
 				on:blur={rename_plan}
-				autofocus
 			/>
 		{:else}
 			<div class="name" id={plan.id}>
