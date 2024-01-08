@@ -34,26 +34,6 @@
 	function toggle_edit() {
 		$editing_id = show_edit_container ? null : plan.id
 	}
-
-	function toggle_done() {
-		dispatch("toggle_done")
-	}
-
-	function move_to_next_week() {
-		dispatch("next")
-	}
-
-	function move_to_previous_week() {
-		dispatch("previous")
-	}
-
-	function delete_plan() {
-		dispatch("delete")
-	}
-
-	function rename_plan() {
-		dispatch("rename", name)
-	}
 </script>
 
 <div class="container">
@@ -78,7 +58,7 @@
 				type="text"
 				class="name"
 				bind:value={name}
-				on:blur={rename_plan}
+				on:change={() => dispatch("rename", name)}
 			/>
 		{:else}
 			<div class="name" id={plan.id}>
@@ -93,7 +73,7 @@
 				aria-label="toggle done"
 				class="button"
 				class:done={plan.done}
-				on:click={toggle_done}
+				on:click={() => dispatch("toggle_done")}
 			>
 				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
@@ -101,7 +81,7 @@
 			<button
 				aria-label="move to next week"
 				class="button"
-				on:click={move_to_next_week}
+				on:click={() => dispatch("next")}
 			>
 				<Fa icon={faChevronRight} />
 			</button>
@@ -109,7 +89,7 @@
 			<button
 				aria-label="move to previous week"
 				class="button"
-				on:click={move_to_previous_week}
+				on:click={() => dispatch("previous")}
 			>
 				<Fa icon={faChevronLeft} />
 			</button>
@@ -117,7 +97,7 @@
 			<button
 				aria-label="delete plan"
 				class="button"
-				on:click={delete_plan}
+				on:click={() => dispatch("delete")}
 			>
 				<Fa icon={faTrashAlt} />
 			</button>
