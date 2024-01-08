@@ -52,10 +52,6 @@
 	}
 
 	function rename_plan() {
-		if (!name) {
-			name = plan.name
-			return
-		}
 		dispatch("rename", name)
 	}
 </script>
