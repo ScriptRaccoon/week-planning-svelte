@@ -22,6 +22,9 @@ devDependencies:
   '@tsconfig/svelte':
     specifier: ^5.0.2
     version: 5.0.2
+  '@types/node':
+    specifier: ^20.10.7
+    version: 20.10.7
   svelte:
     specifier: ^4.2.8
     version: 4.2.8
@@ -36,7 +39,7 @@ devDependencies:
     version: 5.3.3
   vite:
     specifier: ^5.0.8
-    version: 5.0.11
+    version: 5.0.11(@types/node@20.10.7)
 
 packages:
 
@@ -437,7 +440,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 3.0.1(svelte@4.2.8)(vite@5.0.11)
       debug: 4.3.4
       svelte: 4.2.8
-      vite: 5.0.11
+      vite: 5.0.11(@types/node@20.10.7)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -456,7 +459,7 @@ packages:
       magic-string: 0.30.5
       svelte: 4.2.8
       svelte-hmr: 0.15.3(svelte@4.2.8)
-      vite: 5.0.11
+      vite: 5.0.11(@types/node@20.10.7)
       vitefu: 0.2.5(vite@5.0.11)
     transitivePeerDependencies:
       - supports-color
@@ -468,6 +471,12 @@ packages:
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  /@types/node@20.10.7:
+    resolution: {integrity: sha512-fRbIKb8C/Y2lXxB5eVMj4IU7xpdox0Lh8bUPEdtLysaylsml1hOOx1+STloRs/B9nf7C6kPRmmg/V7aQW7usNg==}
+    dependencies:
+      undici-types: 5.26.5
+    dev: true
 
   /@types/pug@2.0.10:
     resolution: {integrity: sha512-Sk/uYFOBAB7mb74XcpizmH0KOR2Pv3D2Hmrh1Dmy5BmK3MpdSa5kqZcg6EKBdklU0bFXX9gCfzvpnyUehrPIuA==}
@@ -1070,7 +1079,11 @@ packages:
     hasBin: true
     dev: true
 
-  /vite@5.0.11:
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+    dev: true
+
+  /vite@5.0.11(@types/node@20.10.7):
     resolution: {integrity: sha512-XBMnDjZcNAw/G1gEiskiM1v6yzM4GE5aMGvhWTlHAYYhxb7S3/V1s3m2LDHa8Vh6yIWYYB0iJwsEaS523c4oYA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1098,6 +1111,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.10.7
       esbuild: 0.19.11
       postcss: 8.4.33
       rollup: 4.9.3
@@ -1113,7 +1127,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.0.11
+      vite: 5.0.11(@types/node@20.10.7)
     dev: true
 
   /wrappy@1.0.2:

@@ -1,5 +1,5 @@
 import { writable, type Writable } from "svelte/store"
-import type { Plan_Data } from "./types"
+import type { Plan_Data } from "@/shared/types"
 
 function local_store<T>(
 	key: string,
