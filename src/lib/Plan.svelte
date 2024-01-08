@@ -12,10 +12,10 @@
 	} from "@fortawesome/free-solid-svg-icons"
 	import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
-	import type { PlanData } from "../types"
+	import type { Plan_Data } from "../types"
 	import { editing_id } from "../stores"
 
-	export let plan: PlanData
+	export let plan: Plan_Data
 
 	$: show_edit_container = $editing_id === plan.id
 

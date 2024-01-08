@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { PlanData } from "../types"
+	import type { Plan_Data } from "../types"
 	import Plan from "./Plan.svelte"
 
-	export let current_plans: PlanData[] = []
+	export let current_plans: Plan_Data[] = []
 </script>
 
 <div>

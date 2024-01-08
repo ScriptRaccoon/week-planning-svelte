@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PlanData } from "./types"
+	import type { Plan_Data } from "./types"
 	import { add_one_week, get_week_start, key, remove_one_week } from "./utils"
 	import { editing_id, plans } from "./stores"
 
@@ -14,7 +14,7 @@
 
 	function create_plan(name: string) {
 		if (!name) return
-		const plan: PlanData = {
+		const plan: Plan_Data = {
 			id: crypto.randomUUID(),
 			name,
 			done: false,

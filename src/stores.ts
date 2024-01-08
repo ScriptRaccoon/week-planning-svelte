@@ -1,5 +1,5 @@
 import { writable, type Writable } from "svelte/store"
-import type { PlanData } from "./types"
+import type { Plan_Data } from "./types"
 
 function local_store<T>(
 	key: string,
@@ -27,4 +27,4 @@ function local_store<T>(
 }
 
 export const editing_id = writable<string | null>(null)
-export const plans = local_store<Record<string, PlanData[]>>("plans", {})
+export const plans = local_store<Record<string, Plan_Data[]>>("plans", {})
