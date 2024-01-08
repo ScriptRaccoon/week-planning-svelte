@@ -1,12 +1,17 @@
 <script lang="ts">
-	import type { Plan_Data } from "./types"
-	import { add_one_week, get_week_start, key, remove_one_week } from "./utils"
-	import { editing_id, plans } from "./stores"
+	import type { Plan_Data } from "./shared/types"
+	import {
+		add_one_week,
+		get_week_start,
+		key,
+		remove_one_week,
+	} from "./shared/utils"
+	import { editing_id, plans } from "./shared/stores"
 
-	import WeekMenu from "./lib/WeekMenu.svelte"
-	import Header from "./lib/Header.svelte"
-	import Plans from "./lib/Plans.svelte"
-	import AddPlan from "./lib/AddPlan.svelte"
+	import WeekMenu from "./components/WeekMenu.svelte"
+	import Header from "./components/Header.svelte"
+	import Plans from "./components/Plans.svelte"
+	import AddPlan from "./components/AddPlan.svelte"
 
 	const now = new Date()
 	let week_start = get_week_start(now)

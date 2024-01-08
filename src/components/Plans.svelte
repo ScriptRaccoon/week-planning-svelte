@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Plan_Data } from "../types"
+	import type { Plan_Data } from "../shared/types"
 	import Plan from "./Plan.svelte"
 
 	export let current_plans: Plan_Data[] = []

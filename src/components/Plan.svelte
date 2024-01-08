@@ -12,8 +12,8 @@
 	} from "@fortawesome/free-solid-svg-icons"
 	import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
-	import type { Plan_Data } from "../types"
-	import { editing_id } from "../stores"
+	import type { Plan_Data } from "../shared/types"
+	import { editing_id } from "../shared/stores"
 
 	export let plan: Plan_Data
 

@@ -4,8 +4,12 @@
 		faChevronLeft,
 		faChevronRight,
 	} from "@fortawesome/free-solid-svg-icons"
-	import { add_one_week, get_week_end, remove_one_week } from "../utils"
-	import { editing_id } from "../stores"
+	import {
+		add_one_week,
+		get_week_end,
+		remove_one_week,
+	} from "../shared/utils"
+	import { editing_id } from "../shared/stores"
 
 	export let week_start: Date
 
