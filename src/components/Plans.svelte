@@ -3,9 +3,10 @@
 	import Plan from "@/components/Plan.svelte"
 
 	export let current_plans: Plan_Data[] = []
+	export let plans_element: HTMLElement
 </script>
 
-<div>
+<div bind:this={plans_element}>
 	{#each current_plans as plan (plan.id)}
 		<Plan {plan} on:delete on:next on:previous on:toggle_done on:rename />
 	{/each}

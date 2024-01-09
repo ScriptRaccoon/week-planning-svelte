@@ -15,6 +15,7 @@
 
 	const now = new Date()
 	let week_start = get_week_start(now)
+	let plans_element: HTMLElement
 	$: current_plans = $plans[key(week_start)] ?? []
 
 	function create_plan(name: string) {
@@ -70,11 +71,17 @@
 		if (e.key === "Escape") cancel_edit()
 	}
 
+	function handle_click(event: MouseEvent) {
+		const is_outside = !plans_element?.contains(event.target as Node)
+		if ($editing_id && is_outside) cancel_edit()
+	}
+
 	function cancel_edit() {
 		$editing_id = null
 	}
 </script>
 
+<svelte:document on:click={handle_click} />
 <svelte:window on:keydown={handle_keydown} />
 
 <Header>Week Planner</Header>
@@ -84,6 +91,7 @@
 	<AddPlan on:add={(e) => create_plan(e.detail)} />
 	<Plans
 		{current_plans}
+		bind:plans_element
 		on:next={() => move(1)}
 		on:previous={() => move(-1)}
 		on:delete={delete_plan}
