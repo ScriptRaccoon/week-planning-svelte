@@ -1,5 +1,7 @@
 <header>
-	<h1>Week Planner</h1>
+	<h1>
+		<slot></slot>
+	</h1>
 </header>
 
 <style>

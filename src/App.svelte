@@ -77,7 +77,7 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<Header />
+<Header>Week Planner</Header>
 
 <main>
 	<WeekMenu bind:week_start />
