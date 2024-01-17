@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Plan_Data } from "@/shared/types"
+	import type { PlanData } from "@/shared/types"
 	import {
-		add_one_week,
-		get_week_start,
+		addOneWeek,
+		getWeekStart,
 		key,
-		remove_one_week,
+		removeOneWeek,
 	} from "@/shared/utils"
-	import { editing_id, plans } from "@/shared/stores"
+	import { editingID, plans } from "@/shared/stores"
 
 	import WeekMenu from "@/components/WeekMenu.svelte"
 	import Header from "@/components/Header.svelte"
@@ -14,89 +14,87 @@
 	import AddPlan from "@/components/AddPlan.svelte"
 
 	const now = new Date()
-	let week_start = get_week_start(now)
-	let plans_element: HTMLElement
-	$: current_plans = $plans[key(week_start)] ?? []
+	let weekStart = getWeekStart(now)
+	let plansElement: HTMLElement
+	$: currentPlans = $plans[key(weekStart)] ?? []
 
-	function create_plan(name: string) {
+	function createPlan(name: string) {
 		if (!name) return
-		const plan: Plan_Data = {
+		const plan: PlanData = {
 			id: crypto.randomUUID(),
 			name,
 			done: false,
 		}
-		$plans[key(week_start)] = [...current_plans, plan]
+		$plans[key(weekStart)] = [...currentPlans, plan]
 	}
 
 	function move(offset: 1 | -1): void {
-		const id = $editing_id
+		const id = $editingID
 		if (!id) return
-		const plan = current_plans.find((p) => p.id === id)
+		const plan = currentPlans.find((p) => p.id === id)
 		if (!plan) return
 
-		$plans[key(week_start)] = current_plans.filter((p) => p.id != id)
+		$plans[key(weekStart)] = currentPlans.filter((p) => p.id != id)
 
-		const action = offset === 1 ? add_one_week : remove_one_week
-		const new_date = action(week_start)
+		const action = offset === 1 ? addOneWeek : removeOneWeek
+		const newDate = action(weekStart)
 
-		$plans[key(new_date)] ??= []
-		$plans[key(new_date)] = [...$plans[key(new_date)], plan]
-		cancel_edit()
+		$plans[key(newDate)] ??= []
+		$plans[key(newDate)] = [...$plans[key(newDate)], plan]
+		cancelEdit()
 	}
 
-	function delete_plan(): void {
-		$plans[key(week_start)] = current_plans.filter(
-			(p) => p.id != $editing_id
-		)
-		cancel_edit()
+	function deletePlan(): void {
+		$plans[key(weekStart)] = currentPlans.filter((p) => p.id != $editingID)
+		cancelEdit()
 	}
 
-	function toggle_done(): void {
-		const plan = current_plans.find((p) => p.id === $editing_id)
+	function toggleDone(): void {
+		const plan = currentPlans.find((p) => p.id === $editingID)
 		if (!plan) return
 		plan.done = !plan.done
-		$plans[key(week_start)] = current_plans
-		cancel_edit()
+		$plans[key(weekStart)] = currentPlans
+		cancelEdit()
 	}
 
-	function rename_plan(name: string): void {
+	function renamePlan(name: string): void {
 		if (!name) return
-		const plan = current_plans.find((p) => p.id === $editing_id)
+		const plan = currentPlans.find((p) => p.id === $editingID)
 		if (!plan) return
 		plan.name = name
-		$plans[key(week_start)] = current_plans
+		$plans[key(weekStart)] = currentPlans
 	}
 
-	function handle_keydown(e: KeyboardEvent) {
-		if (e.key === "Escape") cancel_edit()
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === "Escape") cancelEdit()
 	}
 
-	function handle_click(event: MouseEvent) {
-		const is_outside = !plans_element?.contains(event.target as Node)
-		if ($editing_id && is_outside) cancel_edit()
+	function handleClick(event: MouseEvent) {
+		const isOutside = !plansElement?.contains(event.target as Node)
+		if ($editingID && isOutside) cancelEdit()
 	}
 
-	function cancel_edit() {
-		$editing_id = null
+	function cancelEdit() {
+		$editingID = null
 	}
 </script>
 
-<svelte:document on:click={handle_click} />
-<svelte:window on:keydown={handle_keydown} />
+<svelte:document on:click={handleClick} />
+<svelte:window on:keydown={handleKeydown} />
 
 <Header>Week Planner</Header>
 
 <main>
-	<WeekMenu bind:week_start />
-	<AddPlan on:add={(e) => create_plan(e.detail)} />
+	<WeekMenu bind:weekStart />
+	<AddPlan on:add={(e) => createPlan(e.detail)} />
 	<Plans
-		{current_plans}
-		bind:plans_element
+		{currentPlans}
+		bind:plansElement
 		on:next={() => move(1)}
 		on:previous={() => move(-1)}
-		on:delete={delete_plan}
-		on:toggle_done={toggle_done}
-		on:rename={(e) => rename_plan(e.detail)}
+		on:delete={deletePlan}
+		on:toggleDone={toggleDone}
+		on:rename={(e) => renamePlan(e.detail)}
 	/>
 </main>
 

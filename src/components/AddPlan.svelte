@@ -10,10 +10,10 @@
 		if (!name) return
 		dispatch("add", name)
 		name = ""
-		set_status("added")
+		setStatus("added")
 	}
 
-	function set_status(txt: string) {
+	function setStatus(txt: string) {
 		status = txt
 		setTimeout(() => (status = ""), 1000)
 	}
@@ -22,11 +22,11 @@
 <div aria-live="polite" class="sr-only">{status}</div>
 
 <form on:submit|preventDefault={add}>
-	<label class="label" for="name_input">What do you plan this week?</label>
+	<label class="label" for="nameInput">What do you plan this week?</label>
 	<input
 		type="text"
 		class="input"
-		id="name_input"
+		id="nameInput"
 		bind:value={name}
 		autocomplete="off"
 	/>

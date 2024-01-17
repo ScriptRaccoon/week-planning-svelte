@@ -1,22 +1,22 @@
 import { writable, type Writable } from "svelte/store"
-import type { Plan_Data } from "@/shared/types"
+import type { PlanData } from "@/shared/types"
 
-function local_store<T>(
+function localStore<T>(
 	key: string,
-	default_value: T,
+	defaultValue: T,
 	update: (value: T) => void = () => {}
 ): Writable<T> {
-	let initial_value: T
+	let initialValue: T
 	try {
-		const has_stored_value = localStorage.getItem(key) !== null
-		initial_value = has_stored_value
+		const hasStoredValue = localStorage.getItem(key) !== null
+		initialValue = hasStoredValue
 			? JSON.parse(localStorage.getItem(key)!)
-			: default_value
+			: defaultValue
 	} catch (_) {
-		initial_value = default_value
+		initialValue = defaultValue
 	}
 
-	const store = writable<T>(initial_value)
+	const store = writable<T>(initialValue)
 
 	store.subscribe((value: T) => {
 		localStorage.setItem(key, JSON.stringify(value))
@@ -26,5 +26,5 @@ function local_store<T>(
 	return store
 }
 
-export const editing_id = writable<string | null>(null)
-export const plans = local_store<Record<string, Plan_Data[]>>("plans", {})
+export const editingID = writable<string | null>(null)
+export const plans = localStore<Record<string, PlanData[]>>("plans", {})

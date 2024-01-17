@@ -4,44 +4,44 @@
 		faChevronLeft,
 		faChevronRight,
 	} from "@fortawesome/free-solid-svg-icons"
-	import { add_one_week, get_week_end, remove_one_week } from "@/shared/utils"
-	import { editing_id } from "@/shared/stores"
+	import { addOneWeek, getWeekEnd, removeOneWeek } from "@/shared/utils"
+	import { editingID } from "@/shared/stores"
 
-	export let week_start: Date
+	export let weekStart: Date
 
-	$: week_end = get_week_end(week_start)
+	$: weekEnd = getWeekEnd(weekStart)
 
-	function increment_week() {
-		$editing_id = null
-		week_start = add_one_week(week_start)
+	function incrementWeek() {
+		$editingID = null
+		weekStart = addOneWeek(weekStart)
 	}
 
-	function decrement_week() {
-		$editing_id = null
-		week_start = remove_one_week(week_start)
+	function decrementWeek() {
+		$editingID = null
+		weekStart = removeOneWeek(weekStart)
 	}
 </script>
 
 <div>
 	<h2>
 		<span aria-hidden="true">
-			{week_start.toLocaleDateString()} &nbsp;&ndash;&nbsp; {week_end.toLocaleDateString()}
+			{weekStart.toLocaleDateString()} &nbsp;&ndash;&nbsp; {weekEnd.toLocaleDateString()}
 		</span>
 		<span class="sr-only" aria-live="polite">
-			{week_start.toDateString()}
-			{week_end.toDateString()}
+			{weekStart.toDateString()}
+			{weekEnd.toDateString()}
 		</span>
 	</h2>
 
 	<button
 		class="button big"
 		aria-label="previous week"
-		on:click={decrement_week}
+		on:click={decrementWeek}
 	>
 		<Fa icon={faChevronLeft} />
 	</button>
 
-	<button class="button big" aria-label="next week" on:click={increment_week}>
+	<button class="button big" aria-label="next week" on:click={incrementWeek}>
 		<Fa icon={faChevronRight} />
 	</button>
 </div>

@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { Plan_Data } from "@/shared/types"
+	import type { PlanData } from "@/shared/types"
 	import Plan from "@/components/Plan.svelte"
 
-	export let current_plans: Plan_Data[] = []
-	export let plans_element: HTMLElement
+	export let currentPlans: PlanData[] = []
+	export let plansElement: HTMLElement
 </script>
 
-<div bind:this={plans_element}>
-	{#each current_plans as plan (plan.id)}
-		<Plan {plan} on:delete on:next on:previous on:toggle_done on:rename />
+<div bind:this={plansElement}>
+	{#each currentPlans as plan (plan.id)}
+		<Plan {plan} on:delete on:next on:previous on:toggleDone on:rename />
 	{/each}
 </div>
 

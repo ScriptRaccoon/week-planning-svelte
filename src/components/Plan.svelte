@@ -12,12 +12,12 @@
 	} from "@fortawesome/free-solid-svg-icons"
 	import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
-	import type { Plan_Data } from "@/shared/types"
-	import { editing_id } from "@/shared/stores"
+	import type { PlanData } from "@/shared/types"
+	import { editingID } from "@/shared/stores"
 
-	export let plan: Plan_Data
+	export let plan: PlanData
 
-	$: show_edit_container = $editing_id === plan.id
+	$: showEditContainer = $editingID === plan.id
 
 	let name = plan.name
 
@@ -25,14 +25,14 @@
 		next: void
 		previous: void
 		delete: void
-		toggle_done: void
+		toggleDone: void
 		rename: string
 	}
 
 	const dispatch = createEventDispatcher<Events>()
 
-	function toggle_edit() {
-		$editing_id = show_edit_container ? null : plan.id
+	function toggleEdit() {
+		$editingID = showEditContainer ? null : plan.id
 	}
 </script>
 
@@ -40,19 +40,19 @@
 	<div
 		class="plan"
 		class:done={plan.done}
-		class:edit={show_edit_container}
-		class:opaque={$editing_id !== null && !show_edit_container}
+		class:edit={showEditContainer}
+		class:opaque={$editingID !== null && !showEditContainer}
 	>
 		<button
 			aria-label="toggle edit"
 			class="button"
-			on:click={toggle_edit}
+			on:click={toggleEdit}
 			aria-describedby={plan.id}
 		>
 			<Fa icon={faBars} />
 		</button>
 
-		{#if show_edit_container}
+		{#if showEditContainer}
 			<input
 				aria-label="name"
 				type="text"
@@ -67,13 +67,13 @@
 		{/if}
 	</div>
 
-	{#if show_edit_container}
-		<div class="edit_container" transition:fly={{ duration: 120, x: 20 }}>
+	{#if showEditContainer}
+		<div class="editContainer" transition:fly={{ duration: 120, x: 20 }}>
 			<button
 				aria-label="toggle done"
 				class="button"
 				class:done={plan.done}
-				on:click={() => dispatch("toggle_done")}
+				on:click={() => dispatch("toggleDone")}
 			>
 				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
@@ -152,7 +152,7 @@
 		background-color: var(--secondary-color);
 	}
 
-	.edit_container {
+	.editContainer {
 		z-index: 10;
 		position: absolute;
 		right: 0;

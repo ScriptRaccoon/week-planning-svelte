@@ -1,4 +1,4 @@
-export type Plan_Data = {
+export type PlanData = {
 	id: string
 	name: string
 	done: boolean
