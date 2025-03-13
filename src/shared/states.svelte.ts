@@ -5,18 +5,18 @@ export function cancelEditing() {
 }
 
 export function createLocalStore<T>(key: string, defaultValue: T) {
-	let value = $state<T>(defaultValue)
+	let state = $state<T>(defaultValue)
 
 	try {
 		const item = localStorage.getItem(key)
-		if (item) value = JSON.parse(item)
+		if (item) state = JSON.parse(item)
 	} catch {
-		value = defaultValue
+		state = defaultValue
 	}
 
 	$effect(() => {
-		localStorage.setItem(key, JSON.stringify(value))
+		localStorage.setItem(key, JSON.stringify(state))
 	})
 
-	return { value }
+	return state
 }

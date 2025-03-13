@@ -14,9 +14,9 @@
 	const initialWeekStart = getWeekStart(now)
 	let weekStart = $state(initialWeekStart)
 
-	plans.value[key(initialWeekStart)] ??= []
+	plans[key(initialWeekStart)] ??= []
 
-	let currentPlans = $derived(plans.value[key(weekStart)])
+	let currentPlans = $derived(plans[key(weekStart)])
 
 	function addPlan(name: string) {
 		if (!name) return
@@ -25,7 +25,7 @@
 			name,
 			done: false,
 		}
-		plans.value[key(weekStart)].push(plan)
+		plans[key(weekStart)].push(plan)
 	}
 
 	function movePlan(weekOffset: 1 | -1): void {
@@ -34,18 +34,18 @@
 		const plan = currentPlans.find((p) => p.id === id)
 		if (!plan) return
 
-		plans.value[key(weekStart)] = currentPlans.filter((p) => p.id != id)
+		plans[key(weekStart)] = currentPlans.filter((p) => p.id != id)
 
 		const newDate =
 			weekOffset === 1 ? addOneWeek(weekStart) : removeOneWeek(weekStart)
 
-		plans.value[key(newDate)] ??= []
-		plans.value[key(newDate)].push(plan)
+		plans[key(newDate)] ??= []
+		plans[key(newDate)].push(plan)
 		cancelEditing()
 	}
 
 	function deletePlan(): void {
-		plans.value[key(weekStart)] = currentPlans.filter((p) => p.id != editingID.value)
+		plans[key(weekStart)] = currentPlans.filter((p) => p.id != editingID.value)
 		cancelEditing()
 	}
 </script>
