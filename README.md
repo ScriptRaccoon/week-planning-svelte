@@ -15,7 +15,18 @@ This is the size of the bundled, built assets (HTML + CSS + JS). Both versions u
 
 These results are quite shocking and are similar to the findings of my earlier [framework comparison project](https://github.com/ScriptRaccoon/shopping-list-frameworks).
 
-## Notable differences
+## Lighthouse comparison
+
+| Metric            | React | Svelte |
+| ----------------- | ----- | ------ |
+| Performance Score | 98    | 100    |
+| FCP               | 1.9 s | 1.5 s  |
+| LCP               | 1.9 s | 1.5 s  |
+| TBT               | 0 ms  | 0 ms   |
+| CLS               | 0     | 0      |
+| SI                | 2.1 s | 1.5 s  |
+
+## Notable differences in DX
 
 Many concepts are very similar between Svelte and React, especially since Svelte 5 came out, but there are many differences when it comes to the details.
 
