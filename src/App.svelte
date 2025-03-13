@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PlanData } from "@/shared/types"
-	import { addOneWeek, getWeekStart, key, removeOneWeek } from "@/shared/utils"
+	import { addOneWeek, getWeekStart, key, subtractOneWeek } from "@/shared/utils"
 	import { editingID, createLocalStore, cancelEditing } from "@/shared/states.svelte"
 
 	import WeekMenu from "@/components/WeekMenu.svelte"
@@ -37,7 +37,7 @@
 		plans[key(weekStart)] = currentPlans.filter((p) => p.id != id)
 
 		const newDate =
-			weekOffset === 1 ? addOneWeek(weekStart) : removeOneWeek(weekStart)
+			weekOffset === 1 ? addOneWeek(weekStart) : subtractOneWeek(weekStart)
 
 		plans[key(newDate)] ??= []
 		plans[key(newDate)].push(plan)

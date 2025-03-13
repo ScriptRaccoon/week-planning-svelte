@@ -16,7 +16,7 @@ export function addOneWeek(date: Date) {
 	return newDate
 }
 
-export function removeOneWeek(date: Date) {
+export function subtractOneWeek(date: Date) {
 	const newDate = new Date(date)
 	newDate.setDate(date.getDate() - 7)
 	return newDate

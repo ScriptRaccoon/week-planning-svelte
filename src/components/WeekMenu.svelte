@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
 	import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
-	import { addOneWeek, getWeekEnd, removeOneWeek } from "@/shared/utils"
+	import { addOneWeek, getWeekEnd, subtractOneWeek } from "@/shared/utils"
 	import { cancelEditing } from "@/shared/states.svelte"
 
 	type Props = {
@@ -19,7 +19,7 @@
 
 	function decrementWeek() {
 		cancelEditing()
-		weekStart = removeOneWeek(weekStart)
+		weekStart = subtractOneWeek(weekStart)
 	}
 </script>
 
