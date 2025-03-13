@@ -1,15 +1,16 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
-	import {
-		faChevronLeft,
-		faChevronRight,
-	} from "@fortawesome/free-solid-svg-icons"
+	import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 	import { addOneWeek, getWeekEnd, removeOneWeek } from "@/shared/utils"
 	import { editingID } from "@/shared/stores"
 
-	export let weekStart: Date
+	type Props = {
+		weekStart: Date
+	}
 
-	$: weekEnd = getWeekEnd(weekStart)
+	let { weekStart = $bindable() }: Props = $props()
+
+	let weekEnd = $derived(getWeekEnd(weekStart))
 
 	function incrementWeek() {
 		$editingID = null
@@ -33,15 +34,11 @@
 		</span>
 	</h2>
 
-	<button
-		class="button big"
-		aria-label="previous week"
-		on:click={decrementWeek}
-	>
+	<button class="button big" aria-label="previous week" onclick={decrementWeek}>
 		<Fa icon={faChevronLeft} />
 	</button>
 
-	<button class="button big" aria-label="next week" on:click={incrementWeek}>
+	<button class="button big" aria-label="next week" onclick={incrementWeek}>
 		<Fa icon={faChevronRight} />
 	</button>
 </div>

@@ -2,13 +2,30 @@
 	import type { PlanData } from "@/shared/types"
 	import Plan from "@/components/Plan.svelte"
 
-	export let currentPlans: PlanData[] = []
-	export let plansElement: HTMLElement
+	type Props = {
+		currentPlans?: PlanData[]
+		plansElement: HTMLElement | null
+		renamePlan: (name: string) => void
+		next: () => void
+		previous: () => void
+		deletePlan: () => void
+		toggleDone: () => void
+	}
+
+	let {
+		currentPlans = [],
+		plansElement = $bindable(),
+		renamePlan,
+		next,
+		previous,
+		deletePlan,
+		toggleDone,
+	}: Props = $props()
 </script>
 
 <div bind:this={plansElement}>
 	{#each currentPlans as plan (plan.id)}
-		<Plan {plan} on:delete on:next on:previous on:toggleDone on:rename />
+		<Plan {plan} {renamePlan} {next} {previous} {deletePlan} {toggleDone} />
 	{/each}
 </div>
 

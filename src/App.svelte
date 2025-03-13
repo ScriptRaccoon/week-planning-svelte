@@ -1,11 +1,6 @@
 <script lang="ts">
 	import type { PlanData } from "@/shared/types"
-	import {
-		addOneWeek,
-		getWeekStart,
-		key,
-		removeOneWeek,
-	} from "@/shared/utils"
+	import { addOneWeek, getWeekStart, key, removeOneWeek } from "@/shared/utils"
 	import { editingID, plans } from "@/shared/stores"
 
 	import WeekMenu from "@/components/WeekMenu.svelte"
@@ -14,9 +9,9 @@
 	import AddPlan from "@/components/AddPlan.svelte"
 
 	const now = new Date()
-	let weekStart = getWeekStart(now)
-	let plansElement: HTMLElement
-	$: currentPlans = $plans[key(weekStart)] ?? []
+	let weekStart = $state(getWeekStart(now))
+	let plansElement = $state<HTMLElement | null>(null)
+	let currentPlans = $derived($plans[key(weekStart)] ?? [])
 
 	function createPlan(name: string) {
 		if (!name) return
@@ -79,22 +74,22 @@
 	}
 </script>
 
-<svelte:document on:click={handleClick} />
-<svelte:window on:keydown={handleKeydown} />
+<svelte:document onclick={handleClick} />
+<svelte:window onkeydown={handleKeydown} />
 
 <Header>Week Planner</Header>
 
 <main>
 	<WeekMenu bind:weekStart />
-	<AddPlan on:add={(e) => createPlan(e.detail)} />
+	<AddPlan addPlan={createPlan} />
 	<Plans
 		{currentPlans}
 		bind:plansElement
-		on:next={() => move(1)}
-		on:previous={() => move(-1)}
-		on:delete={deletePlan}
-		on:toggleDone={toggleDone}
-		on:rename={(e) => renamePlan(e.detail)}
+		next={() => move(1)}
+		previous={() => move(-1)}
+		{deletePlan}
+		{toggleDone}
+		{renamePlan}
 	/>
 </main>
 

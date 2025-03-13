@@ -1,6 +1,8 @@
 import { writable, type Writable } from "svelte/store"
 import type { PlanData } from "@/shared/types"
 
+// TODO: migrate this to a $state
+
 function localStore<T>(
 	key: string,
 	defaultValue: T,
@@ -25,6 +27,8 @@ function localStore<T>(
 
 	return store
 }
+
+// TODO: migrate these also to two $states
 
 export const editingID = writable<string | null>(null)
 export const plans = localStore<Record<string, PlanData[]>>("plans", {})

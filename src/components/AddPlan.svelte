@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte"
+	type Props = {
+		addPlan: (name: string) => void
+	}
 
-	const dispatch = createEventDispatcher<{ add: string }>()
+	let { addPlan }: Props = $props()
 
-	let name: string = ""
-	let status: string = ""
+	let name: string = $state("")
+	let status: string = $state("")
 
-	function add() {
+	function handleSubmit(e: SubmitEvent) {
+		e.preventDefault()
 		if (!name) return
-		dispatch("add", name)
+		addPlan(name)
 		name = ""
 		setStatus("added")
 	}
@@ -21,7 +24,7 @@
 
 <div aria-live="polite" class="sr-only">{status}</div>
 
-<form on:submit|preventDefault={add}>
+<form onsubmit={handleSubmit}>
 	<label class="label" for="nameInput">What do you plan this week?</label>
 	<input
 		type="text"

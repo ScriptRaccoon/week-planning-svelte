@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte"
 	import { fly } from "svelte/transition"
 
 	import Fa from "svelte-fa"
@@ -15,21 +14,20 @@
 	import type { PlanData } from "@/shared/types"
 	import { editingID } from "@/shared/stores"
 
-	export let plan: PlanData
-
-	$: showEditContainer = $editingID === plan.id
-
-	let name = plan.name
-
-	type Events = {
-		next: void
-		previous: void
-		delete: void
-		toggleDone: void
-		rename: string
+	type Props = {
+		plan: PlanData
+		renamePlan: (name: string) => void
+		next: () => void
+		previous: () => void
+		deletePlan: () => void
+		toggleDone: () => void
 	}
 
-	const dispatch = createEventDispatcher<Events>()
+	let { plan, renamePlan, next, previous, deletePlan, toggleDone }: Props = $props()
+
+	let showEditContainer = $derived($editingID === plan.id)
+
+	let name = $state(plan.name)
 
 	function toggleEdit() {
 		$editingID = showEditContainer ? null : plan.id
@@ -46,7 +44,7 @@
 		<button
 			aria-label="toggle edit"
 			class="button"
-			on:click={toggleEdit}
+			onclick={toggleEdit}
 			aria-describedby={plan.id}
 		>
 			<Fa icon={faBars} />
@@ -58,7 +56,7 @@
 				type="text"
 				class="name"
 				bind:value={name}
-				on:change={() => dispatch("rename", name)}
+				onchange={() => renamePlan(name)}
 			/>
 		{:else}
 			<div class="name" id={plan.id}>
@@ -73,32 +71,20 @@
 				aria-label="toggle done"
 				class="button"
 				class:done={plan.done}
-				on:click={() => dispatch("toggleDone")}
+				onclick={toggleDone}
 			>
 				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
 
-			<button
-				aria-label="move to next week"
-				class="button"
-				on:click={() => dispatch("next")}
-			>
+			<button aria-label="move to next week" class="button" onclick={next}>
 				<Fa icon={faChevronRight} />
 			</button>
 
-			<button
-				aria-label="move to previous week"
-				class="button"
-				on:click={() => dispatch("previous")}
-			>
+			<button aria-label="move to previous week" class="button" onclick={previous}>
 				<Fa icon={faChevronLeft} />
 			</button>
 
-			<button
-				aria-label="delete plan"
-				class="button"
-				on:click={() => dispatch("delete")}
-			>
+			<button aria-label="delete plan" class="button" onclick={deletePlan}>
 				<Fa icon={faTrashAlt} />
 			</button>
 		</div>
