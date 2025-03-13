@@ -2,7 +2,7 @@
 	import Fa from "svelte-fa"
 	import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 	import { addOneWeek, getWeekEnd, removeOneWeek } from "@/shared/utils"
-	import { editingID } from "@/shared/stores"
+	import { editingID } from "@/shared/states.svelte"
 
 	type Props = {
 		weekStart: Date

@@ -12,7 +12,7 @@
 	import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
 	import type { PlanData } from "@/shared/types"
-	import { editingID } from "@/shared/stores"
+	import { editingID } from "@/shared/states.svelte"
 
 	type Props = {
 		plan: PlanData
