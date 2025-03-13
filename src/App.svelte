@@ -12,7 +12,6 @@
 
 	const now = new Date()
 	let weekStart = $state(getWeekStart(now))
-	let plansElement = $state<HTMLElement | null>(null)
 	plans.value[key(weekStart)] ??= []
 	let currentPlans = $derived(plans.value[key(weekStart)])
 
@@ -46,19 +45,7 @@
 		plans.value[key(weekStart)] = currentPlans.filter((p) => p.id != editingID.value)
 		cancelEditing()
 	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === "Escape") cancelEditing()
-	}
-
-	function handleClick(event: MouseEvent) {
-		const isOutside = !plansElement?.contains(event.target as Node)
-		if (editingID.value && isOutside) cancelEditing()
-	}
 </script>
-
-<svelte:document onclick={handleClick} />
-<svelte:window onkeydown={handleKeydown} />
 
 <Header>Week Planner</Header>
 
@@ -67,7 +54,6 @@
 	<AddPlan {addPlan} />
 	<Plans
 		{currentPlans}
-		bind:plansElement
 		movePlanToNextWeek={() => movePlan(1)}
 		movePlanToPreviousWeek={() => movePlan(-1)}
 		{deletePlan}
