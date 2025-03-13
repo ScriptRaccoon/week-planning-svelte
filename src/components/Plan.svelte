@@ -55,7 +55,11 @@
 			<input aria-label="name" type="text" class="name" bind:value={plan.name} />
 		{:else}
 			<div class="name" id={plan.id}>
-				{plan.name}
+				{#if plan.name}
+					{plan.name}
+				{:else}
+					&nbsp;
+				{/if}
 			</div>
 		{/if}
 	</div>

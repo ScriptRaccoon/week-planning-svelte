@@ -19,7 +19,6 @@
 	let currentPlans = $derived(plans[key(weekStart)])
 
 	function addPlan(name: string) {
-		if (!name) return
 		const plan: PlanData = {
 			id: crypto.randomUUID(),
 			name,

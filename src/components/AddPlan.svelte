@@ -10,7 +10,6 @@
 
 	function handleSubmit(e: SubmitEvent) {
 		e.preventDefault()
-		if (!name) return
 		addPlan(name)
 		name = ""
 		setStatus("added")
