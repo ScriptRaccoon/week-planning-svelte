@@ -48,12 +48,22 @@
 		plans[key(weekStart)] = currentPlans.filter((p) => p.id != editingID.value)
 		cancelEditing()
 	}
+
+	function incrementWeek() {
+		weekStart = addOneWeek(weekStart)
+		cancelEditing()
+	}
+
+	function decrementWeek() {
+		weekStart = subtractOneWeek(weekStart)
+		cancelEditing()
+	}
 </script>
 
 <Header>Week Planner</Header>
 
 <main>
-	<WeekMenu bind:weekStart />
+	<WeekMenu {weekStart} {incrementWeek} {decrementWeek} />
 	<AddPlan {addPlan} />
 	<Plans
 		{currentPlans}

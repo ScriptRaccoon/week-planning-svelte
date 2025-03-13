@@ -1,26 +1,17 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
 	import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
-	import { addOneWeek, getWeekEnd, subtractOneWeek } from "@/shared/utils"
-	import { cancelEditing } from "@/shared/states.svelte"
+	import { getWeekEnd } from "@/shared/utils"
 
 	type Props = {
 		weekStart: Date
+		incrementWeek: () => void
+		decrementWeek: () => void
 	}
 
-	let { weekStart = $bindable() }: Props = $props()
+	let { weekStart = $bindable(), incrementWeek, decrementWeek }: Props = $props()
 
 	let weekEnd = $derived(getWeekEnd(weekStart))
-
-	function incrementWeek() {
-		cancelEditing()
-		weekStart = addOneWeek(weekStart)
-	}
-
-	function decrementWeek() {
-		cancelEditing()
-		weekStart = subtractOneWeek(weekStart)
-	}
 </script>
 
 <div>
