@@ -22,7 +22,7 @@
 			name,
 			done: false,
 		}
-		plans.value[key(weekStart)] = [...currentPlans, plan]
+		plans.value[key(weekStart)].push(plan)
 	}
 
 	function move(offset: 1 | -1): void {
@@ -37,7 +37,7 @@
 		const newDate = action(weekStart)
 
 		plans.value[key(newDate)] ??= []
-		plans.value[key(newDate)] = [...plans.value[key(newDate)], plan]
+		plans.value[key(newDate)].push(plan)
 		cancelEdit()
 	}
 
@@ -50,7 +50,6 @@
 		const plan = currentPlans.find((p) => p.id === editingID.value)
 		if (!plan) return
 		plan.done = !plan.done
-		plans.value[key(weekStart)] = currentPlans
 		cancelEdit()
 	}
 
@@ -59,7 +58,6 @@
 		const plan = currentPlans.find((p) => p.id === editingID.value)
 		if (!plan) return
 		plan.name = name
-		plans.value[key(weekStart)] = currentPlans
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
