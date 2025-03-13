@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte"
 
 	type Props = {
-		children?: Snippet
+		children: Snippet
 	}
 
 	let { children }: Props = $props()
@@ -10,7 +10,7 @@
 
 <header>
 	<h1>
-		{@render children?.()}
+		{@render children()}
 	</h1>
 </header>
 

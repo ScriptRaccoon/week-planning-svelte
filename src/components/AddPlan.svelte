@@ -47,6 +47,7 @@
 		grid-template-columns: 1fr auto;
 		gap: 0.5rem;
 	}
+
 	label {
 		grid-column: 1 / span 2;
 	}

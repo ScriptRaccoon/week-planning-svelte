@@ -47,20 +47,6 @@
 		cancelEditing()
 	}
 
-	function togglePlanDone(): void {
-		const plan = currentPlans.find((p) => p.id === editingID.value)
-		if (!plan) return
-		plan.done = !plan.done
-		cancelEditing()
-	}
-
-	function renamePlan(name: string): void {
-		if (!name) return
-		const plan = currentPlans.find((p) => p.id === editingID.value)
-		if (!plan) return
-		plan.name = name
-	}
-
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === "Escape") cancelEditing()
 	}
@@ -85,8 +71,6 @@
 		movePlanToNextWeek={() => movePlan(1)}
 		movePlanToPreviousWeek={() => movePlan(-1)}
 		{deletePlan}
-		{togglePlanDone}
-		{renamePlan}
 	/>
 </main>
 

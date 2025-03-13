@@ -12,32 +12,26 @@
 	import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
 	import type { PlanData } from "@/shared/types"
-	import { editingID } from "@/shared/states.svelte"
+	import { cancelEditing, editingID } from "@/shared/states.svelte"
 
 	type Props = {
 		plan: PlanData
-		renamePlan: (name: string) => void
 		movePlanToNextWeek: () => void
 		movePlanToPreviousWeek: () => void
 		deletePlan: () => void
-		togglePlanDone: () => void
 	}
 
-	let {
-		plan,
-		renamePlan,
-		movePlanToNextWeek,
-		movePlanToPreviousWeek,
-		deletePlan,
-		togglePlanDone,
-	}: Props = $props()
+	let { plan, movePlanToNextWeek, movePlanToPreviousWeek, deletePlan }: Props = $props()
 
 	let showEditContainer = $derived(editingID.value === plan.id)
 
-	let name = $state(plan.name)
-
 	function toggleEdit() {
 		editingID.value = showEditContainer ? null : plan.id
+	}
+
+	function toggleDone() {
+		plan.done = !plan.done
+		cancelEditing()
 	}
 </script>
 
@@ -58,13 +52,7 @@
 		</button>
 
 		{#if showEditContainer}
-			<input
-				aria-label="name"
-				type="text"
-				class="name"
-				bind:value={name}
-				onchange={() => renamePlan(name)}
-			/>
+			<input aria-label="name" type="text" class="name" bind:value={plan.name} />
 		{:else}
 			<div class="name" id={plan.id}>
 				{plan.name}
@@ -78,7 +66,7 @@
 				aria-label="toggle done"
 				class="button"
 				class:done={plan.done}
-				onclick={togglePlanDone}
+				onclick={toggleDone}
 			>
 				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
