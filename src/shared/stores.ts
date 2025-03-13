@@ -28,7 +28,8 @@ function localStore<T>(
 	return store
 }
 
-// TODO: migrate these also to two $states
+export const editingID = $state<{ value: string | null }>({ value: null })
 
-export const editingID = writable<string | null>(null)
+// TODO: migrate this to $state
+
 export const plans = localStore<Record<string, PlanData[]>>("plans", {})

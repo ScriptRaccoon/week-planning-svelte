@@ -25,12 +25,12 @@
 
 	let { plan, renamePlan, next, previous, deletePlan, toggleDone }: Props = $props()
 
-	let showEditContainer = $derived($editingID === plan.id)
+	let showEditContainer = $derived(editingID.value === plan.id)
 
 	let name = $state(plan.name)
 
 	function toggleEdit() {
-		$editingID = showEditContainer ? null : plan.id
+		editingID.value = showEditContainer ? null : plan.id
 	}
 </script>
 
@@ -39,7 +39,7 @@
 		class="plan"
 		class:done={plan.done}
 		class:edit={showEditContainer}
-		class:opaque={$editingID !== null && !showEditContainer}
+		class:opaque={editingID.value !== null && !showEditContainer}
 	>
 		<button
 			aria-label="toggle edit"

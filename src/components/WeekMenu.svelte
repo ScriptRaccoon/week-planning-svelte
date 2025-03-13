@@ -13,12 +13,12 @@
 	let weekEnd = $derived(getWeekEnd(weekStart))
 
 	function incrementWeek() {
-		$editingID = null
+		editingID.value = null
 		weekStart = addOneWeek(weekStart)
 	}
 
 	function decrementWeek() {
-		$editingID = null
+		editingID.value = null
 		weekStart = removeOneWeek(weekStart)
 	}
 </script>

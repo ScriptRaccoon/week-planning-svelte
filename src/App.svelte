@@ -24,7 +24,7 @@
 	}
 
 	function move(offset: 1 | -1): void {
-		const id = $editingID
+		const id = editingID.value
 		if (!id) return
 		const plan = currentPlans.find((p) => p.id === id)
 		if (!plan) return
@@ -40,12 +40,12 @@
 	}
 
 	function deletePlan(): void {
-		$plans[key(weekStart)] = currentPlans.filter((p) => p.id != $editingID)
+		$plans[key(weekStart)] = currentPlans.filter((p) => p.id != editingID.value)
 		cancelEdit()
 	}
 
 	function toggleDone(): void {
-		const plan = currentPlans.find((p) => p.id === $editingID)
+		const plan = currentPlans.find((p) => p.id === editingID.value)
 		if (!plan) return
 		plan.done = !plan.done
 		$plans[key(weekStart)] = currentPlans
@@ -54,7 +54,7 @@
 
 	function renamePlan(name: string): void {
 		if (!name) return
-		const plan = currentPlans.find((p) => p.id === $editingID)
+		const plan = currentPlans.find((p) => p.id === editingID.value)
 		if (!plan) return
 		plan.name = name
 		$plans[key(weekStart)] = currentPlans
@@ -66,11 +66,11 @@
 
 	function handleClick(event: MouseEvent) {
 		const isOutside = !plansElement?.contains(event.target as Node)
-		if ($editingID && isOutside) cancelEdit()
+		if (editingID.value && isOutside) cancelEdit()
 	}
 
 	function cancelEdit() {
-		$editingID = null
+		editingID.value = null
 	}
 </script>
 
