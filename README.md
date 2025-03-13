@@ -1,6 +1,6 @@
 # Week Planner (Svelte version)
 
-I have written the same app in Svelte and React. This is the Svelte version. They will be presented on my channel to compare the concepts and developer experience of both frameworks.
+I have written the same app in Svelte and React. This is the Svelte version (Svelte 5). They will be presented on my channel to compare the concepts and developer experience of both frameworks.
 
 https://week-planner-svelte.netlify.app
 
