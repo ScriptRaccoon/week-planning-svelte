@@ -11,8 +11,11 @@
 	const plans = createLocalStore<Record<string, PlanData[]>>("plans", {})
 
 	const now = new Date()
-	let weekStart = $state(getWeekStart(now))
-	plans.value[key(weekStart)] ??= []
+	const initialWeekStart = getWeekStart(now)
+	let weekStart = $state(initialWeekStart)
+
+	plans.value[key(initialWeekStart)] ??= []
+
 	let currentPlans = $derived(plans.value[key(weekStart)])
 
 	function addPlan(name: string) {
