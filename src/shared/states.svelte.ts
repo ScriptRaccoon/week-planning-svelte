@@ -12,18 +12,20 @@ export function cancelEditing() {
  * Creates a state that is synced with the local storage.
  */
 export function createLocalStore<T>(key: string, defaultValue: T) {
-	let initialValue = defaultValue
-
-	try {
-		const item = localStorage.getItem(key)
-		if (item) initialValue = JSON.parse(item)
-	} catch (_) {}
-
-	const state = $state<T>(initialValue)
+	const state = $state<T>(getStoredValue(key, defaultValue))
 
 	$effect(() => {
 		localStorage.setItem(key, JSON.stringify(state))
 	})
 
 	return state
+}
+
+function getStoredValue<T>(key: string, defaultValue: T): T {
+	try {
+		const hasStoredValue = localStorage.getItem(key) !== null
+		return hasStoredValue ? JSON.parse(localStorage.getItem(key)!) : defaultValue
+	} catch (_) {
+		return defaultValue
+	}
 }
