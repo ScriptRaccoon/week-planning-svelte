@@ -17,13 +17,20 @@
 	type Props = {
 		plan: PlanData
 		renamePlan: (name: string) => void
-		next: () => void
-		previous: () => void
+		movePlanToNextWeek: () => void
+		movePlanToPreviousWeek: () => void
 		deletePlan: () => void
-		toggleDone: () => void
+		togglePlanDone: () => void
 	}
 
-	let { plan, renamePlan, next, previous, deletePlan, toggleDone }: Props = $props()
+	let {
+		plan,
+		renamePlan,
+		movePlanToNextWeek,
+		movePlanToPreviousWeek,
+		deletePlan,
+		togglePlanDone,
+	}: Props = $props()
 
 	let showEditContainer = $derived(editingID.value === plan.id)
 
@@ -39,7 +46,7 @@
 		class="plan"
 		class:done={plan.done}
 		class:edit={showEditContainer}
-		class:opaque={editingID.value !== null && !showEditContainer}
+		class:opaque={!!editingID.value && !showEditContainer}
 	>
 		<button
 			aria-label="toggle edit"
@@ -71,16 +78,24 @@
 				aria-label="toggle done"
 				class="button"
 				class:done={plan.done}
-				onclick={toggleDone}
+				onclick={togglePlanDone}
 			>
 				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
 
-			<button aria-label="move to next week" class="button" onclick={next}>
+			<button
+				aria-label="move plan to next week"
+				class="button"
+				onclick={movePlanToNextWeek}
+			>
 				<Fa icon={faChevronRight} />
 			</button>
 
-			<button aria-label="move to previous week" class="button" onclick={previous}>
+			<button
+				aria-label="move plan to previous week"
+				class="button"
+				onclick={movePlanToPreviousWeek}
+			>
 				<Fa icon={faChevronLeft} />
 			</button>
 

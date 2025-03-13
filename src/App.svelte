@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PlanData } from "@/shared/types"
 	import { addOneWeek, getWeekStart, key, removeOneWeek } from "@/shared/utils"
-	import { editingID, createLocalStore } from "@/shared/states.svelte"
+	import { editingID, createLocalStore, cancelEditing } from "@/shared/states.svelte"
 
 	import WeekMenu from "@/components/WeekMenu.svelte"
 	import Header from "@/components/Header.svelte"
@@ -16,7 +16,7 @@
 	plans.value[key(weekStart)] ??= []
 	let currentPlans = $derived(plans.value[key(weekStart)])
 
-	function createPlan(name: string) {
+	function addPlan(name: string) {
 		if (!name) return
 		const plan: PlanData = {
 			id: crypto.randomUUID(),
@@ -26,7 +26,7 @@
 		plans.value[key(weekStart)].push(plan)
 	}
 
-	function move(offset: 1 | -1): void {
+	function movePlan(weekOffset: 1 | -1): void {
 		const id = editingID.value
 		if (!id) return
 		const plan = currentPlans.find((p) => p.id === id)
@@ -34,24 +34,24 @@
 
 		plans.value[key(weekStart)] = currentPlans.filter((p) => p.id != id)
 
-		const action = offset === 1 ? addOneWeek : removeOneWeek
-		const newDate = action(weekStart)
+		const newDate =
+			weekOffset === 1 ? addOneWeek(weekStart) : removeOneWeek(weekStart)
 
 		plans.value[key(newDate)] ??= []
 		plans.value[key(newDate)].push(plan)
-		cancelEdit()
+		cancelEditing()
 	}
 
 	function deletePlan(): void {
 		plans.value[key(weekStart)] = currentPlans.filter((p) => p.id != editingID.value)
-		cancelEdit()
+		cancelEditing()
 	}
 
-	function toggleDone(): void {
+	function togglePlanDone(): void {
 		const plan = currentPlans.find((p) => p.id === editingID.value)
 		if (!plan) return
 		plan.done = !plan.done
-		cancelEdit()
+		cancelEditing()
 	}
 
 	function renamePlan(name: string): void {
@@ -62,16 +62,12 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === "Escape") cancelEdit()
+		if (e.key === "Escape") cancelEditing()
 	}
 
 	function handleClick(event: MouseEvent) {
 		const isOutside = !plansElement?.contains(event.target as Node)
-		if (editingID.value && isOutside) cancelEdit()
-	}
-
-	function cancelEdit() {
-		editingID.value = null
+		if (editingID.value && isOutside) cancelEditing()
 	}
 </script>
 
@@ -82,14 +78,14 @@
 
 <main>
 	<WeekMenu bind:weekStart />
-	<AddPlan addPlan={createPlan} />
+	<AddPlan {addPlan} />
 	<Plans
 		{currentPlans}
 		bind:plansElement
-		next={() => move(1)}
-		previous={() => move(-1)}
+		movePlanToNextWeek={() => movePlan(1)}
+		movePlanToPreviousWeek={() => movePlan(-1)}
 		{deletePlan}
-		{toggleDone}
+		{togglePlanDone}
 		{renamePlan}
 	/>
 </main>

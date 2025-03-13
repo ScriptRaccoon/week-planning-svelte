@@ -2,7 +2,7 @@
 	import Fa from "svelte-fa"
 	import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 	import { addOneWeek, getWeekEnd, removeOneWeek } from "@/shared/utils"
-	import { editingID } from "@/shared/states.svelte"
+	import { cancelEditing } from "@/shared/states.svelte"
 
 	type Props = {
 		weekStart: Date
@@ -13,12 +13,12 @@
 	let weekEnd = $derived(getWeekEnd(weekStart))
 
 	function incrementWeek() {
-		editingID.value = null
+		cancelEditing()
 		weekStart = addOneWeek(weekStart)
 	}
 
 	function decrementWeek() {
-		editingID.value = null
+		cancelEditing()
 		weekStart = removeOneWeek(weekStart)
 	}
 </script>

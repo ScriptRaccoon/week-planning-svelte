@@ -1,5 +1,9 @@
 export const editingID = $state<{ value: string | null }>({ value: null })
 
+export function cancelEditing() {
+	editingID.value = null
+}
+
 export function createLocalStore<T>(key: string, defaultValue: T) {
 	let value = $state<T>(defaultValue)
 
