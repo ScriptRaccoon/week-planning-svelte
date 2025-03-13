@@ -13,7 +13,8 @@
 	const now = new Date()
 	let weekStart = $state(getWeekStart(now))
 	let plansElement = $state<HTMLElement | null>(null)
-	let currentPlans = $derived(plans.value[key(weekStart)] ?? [])
+	plans.value[key(weekStart)] ??= []
+	let currentPlans = $derived(plans.value[key(weekStart)])
 
 	function createPlan(name: string) {
 		if (!name) return
