@@ -1,6 +1,12 @@
 <script lang="ts">
 	import type { PlanData, PlansData } from "@/shared/types"
-	import { addOneWeek, getWeekStart, key, subtractOneWeek } from "@/shared/utils"
+	import {
+		addOneWeek,
+		getWeekEnd,
+		getWeekStart,
+		key,
+		subtractOneWeek,
+	} from "@/shared/utils"
 	import { createLocalStore, cancelEditing } from "@/shared/states.svelte"
 
 	import WeekMenu from "@/components/WeekMenu.svelte"
@@ -11,8 +17,8 @@
 	const plans = createLocalStore<PlansData>("plans", {})
 
 	const now = new Date()
-	const initialWeekStart = getWeekStart(now)
-	let weekStart = $state(initialWeekStart)
+	let weekStart = $state(getWeekStart(now))
+	let weekEnd = $derived(getWeekEnd(weekStart))
 
 	let currentPlans = $derived(plans[key(weekStart)] ?? [])
 
@@ -64,7 +70,7 @@
 <Header>Week Planner</Header>
 
 <main>
-	<WeekMenu {weekStart} {incrementWeek} {decrementWeek} />
+	<WeekMenu {weekStart} {weekEnd} {incrementWeek} {decrementWeek} />
 	<AddPlan {addPlan} />
 	<Plans
 		{currentPlans}

@@ -1,17 +1,15 @@
 <script lang="ts">
 	import Fa from "svelte-fa"
 	import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
-	import { getWeekEnd } from "@/shared/utils"
 
 	type Props = {
 		weekStart: Date
+		weekEnd: Date
 		incrementWeek: () => void
 		decrementWeek: () => void
 	}
 
-	let { weekStart = $bindable(), incrementWeek, decrementWeek }: Props = $props()
-
-	let weekEnd = $derived(getWeekEnd(weekStart))
+	let { weekStart, weekEnd, incrementWeek, decrementWeek }: Props = $props()
 </script>
 
 <div>
