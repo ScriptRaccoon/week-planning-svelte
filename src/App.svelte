@@ -16,7 +16,7 @@
 
 	let currentPlans = $derived(plans[key(weekStart)] ?? [])
 
-	function addPlan(name: string) {
+	function addPlan(name: string): void {
 		const plan: PlanData = {
 			id: crypto.randomUUID(),
 			name,
@@ -50,12 +50,12 @@
 		}
 	}
 
-	function incrementWeek() {
+	function incrementWeek(): void {
 		weekStart = addOneWeek(weekStart)
 		cancelEditing()
 	}
 
-	function decrementWeek() {
+	function decrementWeek(): void {
 		weekStart = subtractOneWeek(weekStart)
 		cancelEditing()
 	}

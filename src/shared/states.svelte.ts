@@ -4,14 +4,14 @@
  */
 export const editingID = $state<{ value: string | null }>({ value: null })
 
-export function cancelEditing() {
+export function cancelEditing(): void {
 	editingID.value = null
 }
 
 /**
  * Creates a state that is synced with the local storage.
  */
-export function createLocalStore<T>(key: string, defaultValue: T) {
+export function createLocalStore<T>(key: string, defaultValue: T): T {
 	const state = $state<T>(getStoredValue(key, defaultValue))
 
 	$effect(() => {

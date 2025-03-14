@@ -8,7 +8,7 @@ export function key(date: Date): string {
 /**
  * Returns the first day of the week of the given date.
  */
-export function getWeekStart(date: Date) {
+export function getWeekStart(date: Date): Date {
 	const weekStart = new Date(date)
 	weekStart.setDate(date.getDate() - dayIndex(date))
 	return weekStart
@@ -17,7 +17,7 @@ export function getWeekStart(date: Date) {
 /**
  * Returns the last day of the week of the given date.
  */
-export function getWeekEnd(date: Date) {
+export function getWeekEnd(date: Date): Date {
 	const weekEnd = new Date(date)
 	weekEnd.setDate(date.getDate() + (6 - dayIndex(date)))
 	return weekEnd
@@ -26,14 +26,14 @@ export function getWeekEnd(date: Date) {
 /**
  * Monday = 0, Tuesday = 1, ..., Sunday = 6
  */
-function dayIndex(date: Date) {
+function dayIndex(date: Date): number {
 	return (date.getDay() + 6) % 7
 }
 
 /**
  * Returns a new date that is one week after the given date.
  */
-export function addOneWeek(date: Date) {
+export function addOneWeek(date: Date): Date {
 	const newDate = new Date(date)
 	newDate.setDate(date.getDate() + 7)
 	return newDate
@@ -42,7 +42,7 @@ export function addOneWeek(date: Date) {
 /**
  * Returns a new date that is one week before the given date.
  */
-export function subtractOneWeek(date: Date) {
+export function subtractOneWeek(date: Date): Date {
 	const newDate = new Date(date)
 	newDate.setDate(date.getDate() - 7)
 	return newDate
