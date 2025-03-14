@@ -14,9 +14,7 @@
 	const initialWeekStart = getWeekStart(now)
 	let weekStart = $state(initialWeekStart)
 
-	plans[key(initialWeekStart)] ??= []
-
-	let currentPlans = $derived(plans[key(weekStart)])
+	let currentPlans = $derived(plans[key(weekStart)] ?? [])
 
 	function addPlan(name: string) {
 		const plan: PlanData = {
@@ -24,6 +22,8 @@
 			name,
 			done: false,
 		}
+
+		plans[key(weekStart)] ??= []
 		plans[key(weekStart)].push(plan)
 	}
 
@@ -44,6 +44,10 @@
 	function deletePlan(id: string): void {
 		plans[key(weekStart)] = currentPlans.filter((p) => p.id != id)
 		cancelEditing()
+
+		if (plans[key(weekStart)].length === 0) {
+			delete plans[key(weekStart)]
+		}
 	}
 
 	function incrementWeek() {
