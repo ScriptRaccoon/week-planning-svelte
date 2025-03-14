@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PlanData } from "@/shared/types"
+	import type { PlanData, PlansData } from "@/shared/types"
 	import { addOneWeek, getWeekStart, key, subtractOneWeek } from "@/shared/utils"
 	import { createLocalStore, cancelEditing } from "@/shared/states.svelte"
 
@@ -8,7 +8,7 @@
 	import Plans from "@/components/Plans.svelte"
 	import AddPlan from "@/components/AddPlan.svelte"
 
-	const plans = createLocalStore<Record<string, PlanData[]>>("plans", {})
+	const plans = createLocalStore<PlansData>("plans", {})
 
 	const now = new Date()
 	const initialWeekStart = getWeekStart(now)
@@ -24,7 +24,7 @@
 		}
 
 		plans[key(weekStart)] ??= []
-		plans[key(weekStart)].push(plan)
+		plans[key(weekStart)]?.push(plan)
 	}
 
 	function movePlan(id: string, weekOffset: 1 | -1): void {
@@ -37,7 +37,7 @@
 			weekOffset === 1 ? addOneWeek(weekStart) : subtractOneWeek(weekStart)
 
 		plans[key(newDate)] ??= []
-		plans[key(newDate)].push(plan)
+		plans[key(newDate)]?.push(plan)
 		cancelEditing()
 	}
 
@@ -45,7 +45,7 @@
 		plans[key(weekStart)] = currentPlans.filter((p) => p.id != id)
 		cancelEditing()
 
-		if (plans[key(weekStart)].length === 0) {
+		if (plans[key(weekStart)]?.length === 0) {
 			delete plans[key(weekStart)]
 		}
 	}
