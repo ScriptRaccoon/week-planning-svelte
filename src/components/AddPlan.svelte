@@ -6,22 +6,13 @@
 	let { addPlan }: Props = $props()
 
 	let name: string = $state("")
-	let status: string = $state("")
 
 	function handleSubmit(e: SubmitEvent) {
 		e.preventDefault()
 		addPlan(name)
 		name = ""
-		setStatus("added")
-	}
-
-	function setStatus(txt: string) {
-		status = txt
-		setTimeout(() => (status = ""), 1000)
 	}
 </script>
-
-<div aria-live="polite" class="sr-only">{status}</div>
 
 <form onsubmit={handleSubmit}>
 	<label class="label" for="nameInput">What do you plan this week?</label>
