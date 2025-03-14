@@ -22,9 +22,9 @@ export function createLocalStore<T>(key: string, defaultValue: T) {
 }
 
 function getStoredValue<T>(key: string, defaultValue: T): T {
+	const item = localStorage.getItem(key)
 	try {
-		const hasStoredValue = localStorage.getItem(key) !== null
-		return hasStoredValue ? JSON.parse(localStorage.getItem(key)!) : defaultValue
+		return item ? JSON.parse(item) : defaultValue
 	} catch (_) {
 		return defaultValue
 	}
