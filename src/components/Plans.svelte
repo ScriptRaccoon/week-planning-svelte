@@ -5,9 +5,9 @@
 
 	type Props = {
 		currentPlans: PlanData[]
-		movePlanToNextWeek: () => void
-		movePlanToPreviousWeek: () => void
-		deletePlan: () => void
+		movePlanToNextWeek: (id: string) => void
+		movePlanToPreviousWeek: (id: string) => void
+		deletePlan: (id: string) => void
 	}
 
 	let { currentPlans, movePlanToNextWeek, movePlanToPreviousWeek, deletePlan }: Props =
@@ -30,7 +30,12 @@
 
 <div bind:this={plansElement}>
 	{#each currentPlans as plan (plan.id)}
-		<Plan {plan} {movePlanToNextWeek} {movePlanToPreviousWeek} {deletePlan} />
+		<Plan
+			{plan}
+			movePlanToNextWeek={() => movePlanToNextWeek(plan.id)}
+			movePlanToPreviousWeek={() => movePlanToPreviousWeek(plan.id)}
+			deletePlan={() => deletePlan(plan.id)}
+		/>
 	{/each}
 </div>
 
