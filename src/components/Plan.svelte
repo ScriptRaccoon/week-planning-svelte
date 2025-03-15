@@ -43,10 +43,11 @@
 		class:opaque={!!editingID.value && !showEditContainer}
 	>
 		<button
-			aria-label="toggle edit"
 			class="button"
 			onclick={toggleEdit}
+			aria-label="toggle edit"
 			aria-describedby={plan.id}
+			aria-pressed={showEditContainer}
 		>
 			<Fa icon={faBars} />
 		</button>
@@ -67,10 +68,11 @@
 	{#if showEditContainer}
 		<div class="editContainer" transition:fly={{ duration: 120, x: 20 }}>
 			<button
-				aria-label="toggle done"
 				class="button"
 				class:done={plan.done}
 				onclick={toggleDone}
+				aria-label="toggle done"
+				aria-pressed={plan.done}
 			>
 				<Fa icon={plan.done ? faCircleCheck : faCheck} />
 			</button>
