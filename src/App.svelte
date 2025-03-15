@@ -17,6 +17,7 @@
 	const plans = createLocalStore<PlansData>("plans", {})
 
 	const now = new Date()
+	now.setUTCHours(0, 0, 0, 0)
 	let weekStart = $state(getWeekStart(now))
 	let weekEnd = $derived(getWeekEnd(weekStart))
 
